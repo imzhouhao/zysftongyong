@@ -2,6 +2,7 @@ package com.boot.zysf.api.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.boot.zysf.api.Runner.FileReadRunner;
 import com.boot.zysf.api.Runner.TagRunner;
 import com.boot.zysf.api.mapper.IndustrialCategoryMapper;
 import com.boot.zysf.api.mapper.IndustroyTupuMapper;
@@ -62,6 +63,8 @@ public class IndustrialCategoryController {
     RegionMapper regionMapper;
     @Autowired
     TagRunner tagRunner;
+    @Autowired
+    FileReadRunner fileReadRunner;
 
     @Autowired
     private IndustroyTupuService industroyTupuService;
@@ -217,6 +220,11 @@ public class IndustrialCategoryController {
     @PostMapping(value = "/addIndustroy", headers = "content-type=multipart/form-data")
     public void addInto2(@RequestParam(value = "file", required = true) MultipartFile file){
         industryRead.getExcelInfo(file);
+    }
+
+    @PostMapping(value = "/importHangYe", headers = "content-type=multipart/form-data")
+    public void importHangYe(@RequestParam(value = "file", required = true) MultipartFile file){
+        fileReadRunner.addIntoHangYe(file);
     }
 
     @GetMapping("/tag")

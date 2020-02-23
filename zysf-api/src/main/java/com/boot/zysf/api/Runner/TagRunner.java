@@ -30,6 +30,7 @@ public class TagRunner implements CommandLineRunner {
     IIndustrialCategoryService iIndustrialCategoryService;
 
     public void getTag() throws Exception {
+        tagging.getCode();
         CountableThreadPool threadPool = new CountableThreadPool(60);
         List<BusinessData> businessDataList = businessDataService.list();
         QueryWrapper<IndustroyTupu> query = new QueryWrapper<>();
@@ -63,7 +64,7 @@ public class TagRunner implements CommandLineRunner {
                         }
                         businessData.setTags(tags1);
                         businessDataService.updateById(businessData);
-                     }
+                }
 
                 });
                 Date date = new Date();

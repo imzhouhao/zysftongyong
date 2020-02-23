@@ -1,12 +1,11 @@
 package com.boot.zysf.api.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.api.R;
+import com.boot.zysf.api.Runner.FileReadRunner;
 import com.boot.zysf.api.mapper.BusinessDataMapper;
 import com.boot.zysf.api.mapper.IndustrialCategoryMapper;
 import com.boot.zysf.api.mapper.RegionMapper;
-import com.boot.zysf.api.mapper.ZhuanAndRenMapper;
 import com.boot.zysf.api.po.*;
 import com.boot.zysf.api.po.InduAccess.*;
 import com.boot.zysf.api.po.v0.BussinessDataV0;
@@ -15,14 +14,11 @@ import com.boot.zysf.api.po.v0.ComInfo;
 import com.boot.zysf.api.po.v0.CompanyInfo;
 import com.boot.zysf.api.service.*;
 import com.boot.zysf.api.util.AddressUntils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -58,12 +54,19 @@ public class BusinessDataController {
     BusinessDataMapper businessDataMapper;
     @Autowired
     IndustrialCategoryMapper industrialCategoryMapper;
+    @Autowired
+    FileReadRunner businessDataReadRunner;
 
     @PostMapping(value = "/uploadBusinessData", headers = "content-type=multipart/form-data")
     public List<BusinessData> upLoad(@RequestParam(value = "file", required = true) MultipartFile file) {
         return businessDataService.getBusinessData(file);
     }
 
+    @PostMapping(value = "/importQiye", headers = "content-type=multipart/form-data")
+    public void importQiYe(@RequestParam(value = "file", required = true) MultipartFile file) {
+    businessDataReadRunner.addIntoQiYe(file);
+
+    }
     @PostMapping(value = "/addInto", headers = "content-type=multipart/form-data")
     public void addInto(@RequestParam(value = "file", required = true) MultipartFile file) {
         List<BusinessData> businessDataList = upLoad(file);

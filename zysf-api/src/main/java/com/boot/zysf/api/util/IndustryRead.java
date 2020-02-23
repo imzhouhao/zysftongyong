@@ -83,7 +83,7 @@ public class IndustryRead {
     }
     private void readExcelValue(Workbook wb) {
         Sheet sheet = null;
-        for (int i = 0; i < wb.getNumberOfSheets(); i++) {
+        for (int i = 0; i < 2; i++) {
             sheet = wb.getSheetAt(i);
             this.totalRows = sheet.getPhysicalNumberOfRows();
             if (totalRows > 1 && sheet.getRow(2) != null) {
