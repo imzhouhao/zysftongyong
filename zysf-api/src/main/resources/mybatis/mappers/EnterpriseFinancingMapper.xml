@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.EnterpriseFinancingMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.EnterpriseFinancing">
+        <id column="emp_name" property="empName" />
+        <result column="social_code" property="socialCode" />
+        <result column="market_date" property="marketDate" />
+        <result column="market_model" property="marketModel" />
+        <result column="stock_code" property="stockCode" />
+        <result column="financ_date" property="financDate" />
+        <result column="financ_turn" property="financTurn" />
+        <result column="financ_money" property="financMoney" />
+        <result column="investor" property="investor" />
+        <result column="company_value" property="companyValue" />
+        <result column="is_unicorn" property="isUnicorn" />
+        <result column="invest_to" property="investTo" />
+        <result column="invest_ratio" property="investRatio" />
+        <result column="invest_money" property="investMoney" />
+        <result column="invest_method" property="investMethod" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <select id="listAll" resultMap="BaseResultMap">
+        select  * from enterprise_financing
+    </select>
+    <insert id="addData" parameterType="com.boot.zysf.api.po.EnterpriseFinancing" >
+        INSERT INTO enterprise_financing(emp_name,social_code,market_date,market_model,stock_code,financ_date,financ_turn,financ_money,investor,company_value,is_unicorn,invest_to,invest_ratio,invest_money,invest_method)
+           VALUES (#{empName},
+                   #{socialCode},
+                   #{marketDate},
+                   #{marketModel},
+                   #{stockCode},
+                   #{financDate},
+                   #{financTurn},
+                   #{financMoney},
+                   #{investor},
+                   #{companyValue},
+                   #{isUnicorn},
+                   #{investTo},
+                   #{investRatio},
+                   #{investMoney},
+                   #{investMethod}
+    )</insert>
+</mapper>

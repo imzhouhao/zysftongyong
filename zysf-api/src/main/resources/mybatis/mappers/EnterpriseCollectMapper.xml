@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.EnterpriseCollectMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.Innovation">
+        <id column="id" property="id" />
+        <result column="invention_patent_num" property="inventionPatentNum" />
+        <result column="regeist_trademark_num" property="regeistTrademarkNum" />
+        <result column="software_copyright_num" property="softwareCopyrightNum" />
+
+    </resultMap>
+<select id="listAll" resultMap="BaseResultMap">
+    select id,invention_patent_num,regeist_trademark_num,software_copyright_num from enterprise_collect
+</select>
+    <!-- 通用查询结果列 -->
+    <insert id="addData" parameterType="com.boot.zysf.api.po.EnterpriseCollect" >
+        INSERT INTO enterprise_collect(year,emp_name,phone,social_code,business_and_product,total_tax_pay,employee_final_num,total_final_asset,
+        new_fixed_asset,total_yearendliabilities,bankloan_amount,paid_in_captial,
+        listed_finan_equality,industry_output,operating_income,business_cost,internal_enterprise_funds,
+        net_profit,invention_patent_num,regeist_trademark_num,software_copyright_num,electricity_cost,
+        natural_gas_cost,water_cost
+        )
+           VALUES (#{year},
+                   #{empName},
+                   #{phone},
+                   #{socialCode},
+                   #{businessAndProduct},
+                   #{totalTaxPay},
+                   #{employeeFinalNum},
+                   #{totalFinalAsset},
+                   #{newFixedAsset},
+                   #{totalYearendliabilities},
+                   #{bankloanAmount},
+                   #{paidInCaptial},
+                   #{listedFinanEquality},
+                   #{industryOutput},
+                   #{operatingIncome},
+                   #{businessCost},
+                   #{internalEnterpriseFunds},
+                   #{netProfit},
+                   #{inventionPatentNum},
+                   #{regeistTrademarkNum},
+                   #{softwareCopyrightNum},
+                   #{electricityCost},
+                   #{naturalGasCost},
+                   #{waterCost}
+
+    )</insert>
+</mapper>

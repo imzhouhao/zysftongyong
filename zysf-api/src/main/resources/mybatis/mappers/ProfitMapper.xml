@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.ProfitMapper">
+
+    <!--    &lt;!&ndash; 通用查询映射结果 &ndash;&gt;-->
+    <!--   <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.Assetliability">&ndash;&gt;-->
+    <!--        <id column="emp_name" property="empName" />-->
+    <!--        <result column="saleState" property="saleState" />-->
+    <!--        <result column="legalRepe" property="legalRepe" />-->
+    <!--        <result column="regCapital" property="regCapital" />-->
+    <!--        <result column="date" property="date" />-->
+    <!--        <result column="sheng" property="sheng" />-->
+    <!--        <result column="city" property="city" />-->
+    <!--        <result column="phone" property="phone" />-->
+    <!--        <result column="morePhone" property="morePhone" />-->
+    <!--        <result column="email" property="email" />-->
+    <!--        <result column="social_code" property="socialCode" />-->
+    <!--        <result column="taxer_id" property="taxerId" />-->
+    <!--        <result column="regist_id" property="registId" />-->
+    <!--        <result column="ossication_code" property="ossicationCode" />-->
+    <!--        <result column="insurance_num" property="insuranceNum" />-->
+    <!--        <result column="emp_type" property="empType" />-->
+    <!--        <result column="industory" property="industory" />-->
+    <!--        <result column="url" property="url" />-->
+    <!--        <result column="address" property="address" />-->
+    <!--        <result column="business_scope" property="businessScope" />-->
+    <!--    </resultMap>-->
+    <!-- 通用查询结果列 -->
+    <insert id="addData" parameterType="com.boot.zysf.api.po.Profit" >
+        INSERT INTO profit(emp_name,date,business_income_total,business_income,business_cost_total,business_cost,tax_and_addendum,selling_expense,manage_cost,rd_expense
+        ,financial_expense,interest_expense,interest_income,asset_loss,credit_loss,fair_value_change_income,invest_income,joint_venture_income,asset_disposal_income,
+        operate_profit,out_business_income,noliquid_asset_disposal,out_business_expense,noliquid_asset_disposalLoss,profit_total,income_tax_expense,net_profit,
+        continuing_net_profit,parent_company_net_profit,some_shareholder_loss,deduct_nocontinue_net_profit,income_per_stock,basic_income_per_stock,dilution_income_per_stock,
+        other_income,parent_company_other_income,comperhensive_income_total,parent_company_comperhensive_income_total,parent_company_owner_other_income)
+           VALUES (#{empName},
+                   #{date},
+                   #{businessIncomeTotal},
+                   #{businessIncome},
+                   #{businessCostTotal},
+                   #{businessCost},
+                   #{taxAndAddendum},
+                   #{sellingExpense},
+                   #{manageCost},
+                   #{rdExpense},
+                   #{financialExpense},
+                   #{interestExpense},
+                   #{interestIncome},
+                   #{assetLoss},
+                   #{creditLoss},
+                   #{fairValueChangeIncome},
+                   #{investIncome},
+                   #{jointVentureIncome},
+                   #{assetDisposalIncome},
+                   #{operateProfit},
+                   #{outBusinessIncome},
+                   #{noliquidAssetDisposal},
+                   #{outBusinessExpense},
+                   #{noliquidAssetDisposalLoss},
+                   #{profitTotal},
+                   #{incomeTaxExpense},
+                   #{netProfit},
+                   #{continuingNetProfit},
+                   #{parentCompanyNetProfit},
+                   #{someShareholderLoss},
+                   #{deductNocontinueNetProfit},
+                   #{incomePerStock},
+                   #{basicIncomePerStock},
+                   #{dilutionIncomePerStock},
+                   #{otherIncome},
+                   #{parentCompanyOtherIncome},
+                   #{comperhensiveIncomeTotal},
+                   #{parentCompanyComperhensiveIncomeTotal},
+                   #{parentCompanyOwnerOtherIncome}
+
+    )</insert>
+</mapper>

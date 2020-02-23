@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.IndustrialCategoryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.IndustrialCategory">
+        <id column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <result column="ctime" property="ctime" />
+        <result column="utime" property="utime" />
+    </resultMap>
+
+    <!-- 根据父亲找儿子   parentid -->
+    <resultMap id="BaseTreeResultMap" type="com.boot.zysf.api.po.TreeNode">
+        <id column="id" property="id" />
+        <result column="parent_id" property="parentId" />
+        <result column="name" property="name" />
+        <collection property="children" ofType="com.boot.zysf.api.po.TreeNode" column="id" select="findByParentId"></collection>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, parent_id, name, ctime, utime
+    </sql>
+    <insert id="addInto" parameterType="com.boot.zysf.api.po.IndustrialCategory" >
+        INSERT INTO industrial_category(parent_id,name,ctime,utime,code)
+           VALUES (
+                   #{parentId},
+                   #{name},
+                   #{ctime},
+                   #{utime},
+                   #{code}
+
+    )</insert>
+
+
+
+
+    <select id="getNianData"  parameterType="integer" resultType="com.boot.zysf.api.po.YearData">
+SELECT
+DATE_FORMAT(t2.times,'%Y') year ,
+SUM(t2.business_income_total) income,
+SUM(t2.net_profit) profit
+FROM business_data t1
+LEFT JOIN 01_lirunbiao t2 ON t1.emp_name = t2.`name`
+WHERE t1.tags LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industrial_category t3
+	WHERE id = #{id}
+),
+'%')
+GROUP BY year
+ORDER BY year DESC
+
+
+    </select>
+    <select id="getZhuan"  parameterType="integer" resultType="integer">
+SELECT
+SUM(zhuan_num)
+FROM zhuan_and_ren t1
+LEFT JOIN business_data t2 ON t1.emp_name = t2.emp_name
+WHERE t2.tags LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industrial_category t3
+	WHERE id = #{id}
+),
+'%')
+
+
+    </select>
+
+    <select id="getEmploy"  parameterType="integer" resultType="integer">
+SELECT
+SUM(employee_num)
+FROM enterprise_data t1
+LEFT JOIN business_data t2 ON t1.emp_name = t2.emp_name
+WHERE t2.tags LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industrial_category t3
+	WHERE id = #{id}
+),
+'%')
+
+    </select>
+
+    <select id="getCompany"  parameterType="integer" resultType="integer">
+SELECT
+COUNT(t2.emp_name)
+FROM business_data t2
+WHERE t2.tags LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industrial_category t3
+	WHERE id = #{id}
+),
+'%')
+
+
+    </select>
+
+    <select id="getCompany2"  parameterType="integer" resultType="integer">
+SELECT
+COUNT(t2.emp_name)
+FROM business_data t2
+WHERE t2.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{id}
+),
+'%')
+  </select>
+
+    <select id="getZhuanInfo" parameterType="integer" resultType="com.boot.zysf.api.po.ZhuanLi">
+SELECT *
+    FROM zhuan_li t2
+    LEFT JOIN business_data t1 on t2.emp_name = t1.emp_name
+    WHERE t1.tags2 LIKE CONCAT('%',
+    (
+    SELECT t3.`name`
+    FROM industroy_tupu t3
+    WHERE id = #{id}
+    ),
+    '%')
+
+    </select>
+
+    <select id="getRenInfo" parameterType="integer" resultType="com.boot.zysf.api.po.RenCai">
+SELECT *
+FROM ren_cai t2
+LEFT JOIN business_data t1 on t2.emp_name = t1.emp_name
+WHERE t1.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{id}
+),
+'%')
+
+    </select>
+
+    <select id="getCompanyInfo" parameterType="integer" resultType="com.boot.zysf.api.po.BusinessData">
+SELECT
+*
+FROM business_data t2
+WHERE t2.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{id}
+),
+'%')
+  </select>
+
+    <select id="findByParentId" parameterType="integer" resultMap="BaseTreeResultMap">
+SELECT
+*
+from industrial_category
+WHERE parent_id = #{parentId}
+  </select>
+
+</mapper>

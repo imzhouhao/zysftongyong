@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.EnterpriseDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <!--  <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.BusinessData">
+         <id column="emp_name" property="empName" />
+         <result column="saleState" property="saleState" />
+         <result column="legalRepe" property="legalRepe" />
+         <result column="regCapital" property="regCapital" />
+         <result column="date" property="date" />
+         <result column="sheng" property="sheng" />
+         <result column="city" property="city" />
+         <result column="phone" property="phone" />
+         <result column="morePhone" property="morePhone" />
+         <result column="email" property="email" />
+         <result column="social_code" property="socialCode" />
+         <result column="taxer_id" property="taxerId" />
+         <result column="regist_id" property="registId" />
+         <result column="ossication_code" property="ossicationCode" />
+         <result column="insurance_num" property="insuranceNum" />
+         <result column="emp_type" property="empType" />
+         <result column="industory" property="industory" />
+         <result column="url" property="url" />
+         <result column="address" property="address" />
+         <result column="business_scope" property="businessScope" />
+     </resultMap>
+     -->
+     <!-- 通用查询结果列 -->
+    <insert id="addData" parameterType="com.boot.zysf.api.po.EnterpriseData" >
+        INSERT INTO enterprise_data(market_model,stock_code,stock_abbreviation,emp_name,city,region,main_operating_income,main_operating_income_thounsand,net_profit,net_profit_thousand,
+        employee_num,market_date,establish_date,prospectus,industory,pruduct_type
+        ,main_business)
+           VALUES (#{marketModel},
+                   #{stockCode},
+                   #{stockAbbreviation},
+                   #{empName},
+                   #{city},
+                   #{region},
+                   #{mainOperatingIncome},
+                   #{mainOperatingIncomeThounsand},
+                   #{netProfit},
+                   #{netProfitThousand},
+                   #{employeeNum},
+                   #{marketDate},
+                   #{establishDate},
+                   #{prospectus},
+                   #{industory},
+                   #{pruductType},
+                   #{mainBusiness}
+
+    )</insert>
+</mapper>

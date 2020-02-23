@@ -1,0 +1,78 @@
+Manifest-Version: 1.0
+Main-Class: com.boot.zysf.api.ZysfAPIApplication
+Class-Path: libfreenect-0.5.3-1.3.jar swagger-models-1.5.20.jar spring-t
+ x-5.0.12.RELEASE.jar leptonica-1.73-1.3-android-arm.jar imageio-jpeg-3.
+ 1.1.jar spring-boot-2.1.3.RELEASE.jar springfox-spi-2.9.2.jar mapstruct
+ -1.2.0.Final.jar nd4j-native-0.9.1-linux-x86_64.jar jackson-annotations
+ -2.9.5.jar nd4j-api-0.9.1.jar opencv-3.2.0-1.3-linux-ppc64le.jar lepton
+ ica-1.73-1.3.jar nd4j-native-0.9.1.jar leptonica-1.73-1.3-windows-x86.j
+ ar fastjson-1.2.62.jar hdf5-1.10.0-patch1-1.3-windows-x86_64.jar libfre
+ enect2-0.2.0-1.3.jar spring-aop-5.1.5.RELEASE.jar openblas-0.2.19-1.3-l
+ inux-x86_64.jar nd4j-native-0.9.1-android-x86.jar leptonica-1.73-1.3-wi
+ ndows-x86_64.jar spring-web-5.1.5.RELEASE.jar log4j-api-2.11.2.jar comm
+ ons-codec-1.11.jar mybatis-spring-boot-starter-2.0.0.jar mybatis-spring
+ -boot-autoconfigure-2.0.0.jar leptonica-1.73-1.3-macosx-x86_64.jar arto
+ olkitplus-2.3.1-1.3.jar nd4j-native-0.9.1-macosx-x86_64.jar leptonica-1
+ .73-1.3-linux-x86.jar leptonica-1.73-1.3-linux-armhf.jar hdf5-1.10.0-pa
+ tch1-1.3-windows-x86.jar imageio-metadata-3.1.1.jar nd4j-native-api-0.9
+ .1.jar stax-api-1.0.1.jar validation-api-2.0.1.Final.jar openblas-0.2.1
+ 9-1.3-linux-ppc64le.jar opencv-3.2.0-1.3-macosx-x86_64.jar imageio-tiff
+ -3.1.1.jar spring-context-5.1.5.RELEASE.jar spring-boot-autoconfigure-2
+ .1.2.RELEASE.jar flandmark-1.07-1.3.jar commons-compress-1.8.jar nd4j-n
+ ative-0.9.1-linux-ppc64le.jar common-io-3.1.1.jar spring-boot-starter-w
+ eb-2.1.3.RELEASE.jar videoinput-0.200-1.3.jar jxl-2.6.12.jar slf4j-api-
+ 1.7.25.jar deeplearning4j-modelimport-0.9.1.jar leptonica-1.73-1.3-linu
+ x-x86_64.jar commons-math3-3.4.1.jar hdf5-1.10.0-patch1-1.3.jar spring-
+ expression-5.1.5.RELEASE.jar log4j-1.2.17.jar jboss-logging-3.3.2.Final
+ .jar openblas-0.2.19-1.3-linux-armhf.jar openblas-0.2.19-1.3.jar deeple
+ arning4j-core-0.9.1.jar datavec-data-image-0.9.1.jar leptonica-1.73-1.3
+ -android-x86.jar nd4j-common-0.9.1.jar leptonica-1.73-1.3-linux-ppc64le
+ .jar deeplearning4j-nlp-0.9.1.jar joda-time-2.2.jar jackson-datatype-js
+ r310-2.9.8.jar jackson-core-2.9.8.jar opencv-3.2.0-1.3-linux-x86.jar co
+ mmons-lang-2.6.jar logback-core-1.2.3.jar openblas-platform-0.2.19-1.3.
+ jar imageio-psd-3.1.1.jar spring-jdbc-5.0.12.RELEASE.jar datavec-api-0.
+ 9.1.jar spring-boot-starter-logging-2.1.3.RELEASE.jar fontbox-2.0.17.ja
+ r openblas-0.2.19-1.3-android-arm.jar springfox-schema-2.9.2.jar ffmpeg
+ -3.2.1-1.3.jar jul-to-slf4j-1.7.25.jar spring-plugin-metadata-1.2.0.REL
+ EASE.jar log4j-to-slf4j-2.11.2.jar httpcore-4.4.12.jar spring-boot-star
+ ter-tomcat-2.1.3.RELEASE.jar xz-1.5.jar xml-apis-1.0.b2.jar javassist-3
+ .19.0-GA.jar spring-plugin-core-1.2.0.RELEASE.jar imageio-core-3.1.1.ja
+ r imageio-bmp-3.1.1.jar opencv-3.2.0-1.3-android-x86.jar mybatis-plus-a
+ nnotation-3.1.0.jar springfox-swagger-ui-2.9.2.jar libdc1394-2.2.4-1.3.
+ jar hdf5-platform-1.10.0-patch1-1.3.jar deeplearning4j-ui-components-0.
+ 9.1.jar nd4j-context-0.9.1.jar librealsense-1.9.6-1.3.jar httpclient-4.
+ 5.10.jar openblas-0.2.19-1.3-android-x86.jar jai-imageio-core-1.3.0.jar
+  jackson-datatype-jdk8-2.9.8.jar common-image-3.1.1.jar stream-2.7.0.ja
+ r deeplearning4j-nn-0.9.1.jar mybatis-spring-2.0.0.jar opencv-3.2.0-1.3
+ -linux-x86_64.jar mybatis-3.5.0.jar poi-3.8.jar opencv-3.2.0-1.3-window
+ s-x86_64.jar nd4j-buffer-0.9.1.jar mybatis-plus-3.1.0.jar tomcat-embed-
+ core-9.0.16.jar spring-boot-starter-json-2.1.3.RELEASE.jar hdf5-1.10.0-
+ patch1-1.3-linux-ppc64le.jar spring-beans-5.1.5.RELEASE.jar nd4j-jackso
+ n-0.9.1.jar jsqlparser-1.4.jar lombok-1.16.18.jar tomcat-embed-websocke
+ t-9.0.16.jar commons-lang3-3.3.1.jar snakeyaml-1.23.jar opencv-3.2.0-1.
+ 3-windows-x86.jar leptonica-platform-1.73-1.3.jar jackson-databind-2.9.
+ 8.jar nd4j-native-0.9.1-android-arm.jar stax2-api-3.1.4.jar opencv-3.2.
+ 0-1.3.jar poi-ooxml-schemas-3.8.jar javacpp-1.3.3.jar reflections-0.9.1
+ 0.jar jackson-0.9.1.jar mysql-connector-java-5.1.47.jar springfox-swagg
+ er-common-2.9.2.jar pdfbox-2.0.17.jar javacv-1.3.3.jar nd4j-native-plat
+ form-0.9.1.jar poi-ooxml-3.8.jar spring-jcl-5.1.5.RELEASE.jar logback-c
+ lassic-1.2.3.jar nd4j-native-0.9.1-windows-x86_64.jar neoitertools-1.0.
+ 0.jar tomcat-embed-el-9.0.16.jar opencv-platform-3.2.0-1.3.jar commons-
+ io-2.4.jar openblas-0.2.19-1.3-macosx-x86_64.jar spring-boot-starter-2.
+ 1.3.RELEASE.jar springfox-swagger2-2.9.2.jar spring-boot-starter-jdbc-2
+ .0.8.RELEASE.jar byte-buddy-1.9.3.jar fastutil-6.5.7.jar hdf5-1.10.0-pa
+ tch1-1.3-linux-x86.jar openblas-0.2.19-1.3-windows-x86_64.jar commons-n
+ et-3.1.jar common-lang-3.1.1.jar annotations-2.0.1.jar openblas-0.2.19-
+ 1.3-linux-x86.jar nd4j-base64-0.9.1.jar flycapture-2.9.3.43-1.3.jar jie
+ ba-analysis-1.0.2.jar classmate-1.4.0.jar dom4j-1.6.1.jar swagger-annot
+ ations-1.5.20.jar mybatis-plus-extension-3.1.0.jar nearestneighbor-core
+ -0.9.1.jar opencv-3.2.0-1.3-android-arm.jar spring-core-5.1.5.RELEASE.j
+ ar mybatis-plus-core-3.1.0.jar openblas-0.2.19-1.3-windows-x86.jar free
+ marker-2.3.23.jar opencv-3.2.0-1.3-linux-armhf.jar mybatis-plus-boot-st
+ arter-3.1.0.jar hdf5-1.10.0-patch1-1.3-macosx-x86_64.jar opencsv-2.3.ja
+ r HikariCP-3.3.1.jar hibernate-validator-6.0.14.Final.jar commons-loggi
+ ng-1.2.jar springfox-core-2.9.2.jar javax.annotation-api-1.3.2.jar jack
+ son-module-parameter-names-2.9.8.jar spring-webmvc-5.1.5.RELEASE.jar xm
+ lbeans-2.3.0.jar findbugs-annotations-1.3.9-1.jar hdf5-1.10.0-patch1-1.
+ 3-linux-x86_64.jar guava-20.0.jar springfox-spring-web-2.9.2.jar
+

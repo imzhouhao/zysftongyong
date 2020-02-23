@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.CompanyQualifiMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.CompanyQualification">
+        <id column="emp_name" property="empName" />
+        <result column="social_code" property="socialCode" />
+        <result column="advanced_tech_emp" property="advancedTechEmp" />
+        <result column="ad_identification_body" property="adIdentificationBody" />
+        <result column="advanced_tech_date" property="advancedTechDate" />
+        <result column="certificate_id" property="certificateId" />
+        <result column="small_tech_emp" property="smallTechEmp" />
+        <result column="address" property="address" />
+        <result column="small_tech_date" property="smallTechDate" />
+        <result column="specialized_new_giant" property="specializedNewGiant" />
+        <result column="spec_new_gia_date" property="specNewGiaDate" />
+        <result column="product" property="product" />
+        <result column="industry_education_rmp" property="industryEducationRmp" />
+        <result column="indus_edu_identification_body" property="indusEduIdentificationBody" />
+        <result column="indus_edu_identicication_date" property="indusEduIdenticicationDate" />
+        <result column="industrial_enterprises_above" property="industrialEnterprisesAbove" />
+        <result column="service_enterprises_above" property="serviceEnterprisesAbove" />
+        <result column="retaile_enterprises_above" property="retaileEnterprisesAbove" />
+        <result column="qualification_grade_construction_emp" property="qualificationGradeConstructionEmp" />
+        <result column="top500" property="top500" />
+        <result column="rank_top500" property="rankTop500" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <select id="listEmpQualifi"  resultMap="BaseResultMap">
+        select * from  company_qualification
+    </select>
+    <insert id="addData" parameterType="com.boot.zysf.api.po.CompanyQualification" >
+        INSERT INTO company_qualification(emp_name,social_code,advanced_tech_emp,ad_identification_body,advanced_tech_date,certificate_id,small_tech_emp,address,small_tech_date,specialized_new_giant,spec_new_gia_date,product,industry_education_rmp,indus_edu_identification_body,indus_edu_identicication_date,industrial_enterprises_above,service_enterprises_above,retaile_enterprises_above,qualification_grade_construction_emp,top500,rank_top500)
+           VALUES (#{empName},
+                   #{socialCode},
+                   #{advancedTechEmp},
+                   #{adIdentificationBody},
+                   #{advancedTechDate},
+                   #{certificateId},
+                   #{smallTechEmp},
+                   #{address},
+                   #{smallTechDate},
+                   #{specializedNewGiant},
+                   #{specNewGiaDate},
+                   #{product},
+                   #{industryEducationRmp},
+                   #{indusEduIdentificationBody},
+                   #{indusEduIdenticicationDate},
+                   #{industrialEnterprisesAbove},
+                   #{serviceEnterprisesAbove},
+                   #{retaileEnterprisesAbove},
+                   #{qualificationGradeConstructionEmp},
+                   #{top500},
+                   #{rankTop500}
+    )</insert>
+</mapper>

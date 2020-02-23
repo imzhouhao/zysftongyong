@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.AssetLiabilityMapper">
+
+<!--    &lt;!&ndash; 通用查询映射结果 &ndash;&gt;-->
+<!--   <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.Assetliability">&ndash;&gt;-->
+<!--        <id column="emp_name" property="empName" />-->
+<!--        <result column="saleState" property="saleState" />-->
+<!--        <result column="legalRepe" property="legalRepe" />-->
+<!--        <result column="regCapital" property="regCapital" />-->
+<!--        <result column="date" property="date" />-->
+<!--        <result column="sheng" property="sheng" />-->
+<!--        <result column="city" property="city" />-->
+<!--        <result column="phone" property="phone" />-->
+<!--        <result column="morePhone" property="morePhone" />-->
+<!--        <result column="email" property="email" />-->
+<!--        <result column="social_code" property="socialCode" />-->
+<!--        <result column="taxer_id" property="taxerId" />-->
+<!--        <result column="regist_id" property="registId" />-->
+<!--        <result column="ossication_code" property="ossicationCode" />-->
+<!--        <result column="insurance_num" property="insuranceNum" />-->
+<!--        <result column="emp_type" property="empType" />-->
+<!--        <result column="industory" property="industory" />-->
+<!--        <result column="url" property="url" />-->
+<!--        <result column="address" property="address" />-->
+<!--        <result column="business_scope" property="businessScope" />-->
+<!--    </resultMap>-->
+    <!-- 通用查询结果列 -->
+    <insert id="addData" parameterType="com.boot.zysf.api.po.AssetLiability" >
+        INSERT INTO asset_liability(emp_name,date,liquid_asset,monetary_fund,financial_asset,notes_and_account_receive,note_receive,account_receive,advance_pay,total_other_receive,
+        interest_receive,other_receive,storage,no_liquid_asset_one_year,other_liquid_asset,liquid_asset_total,noliquid_asset,financ_asset_for_sell,hold_to_maturity_invest,longterm_equa_invest
+        ,investal_estate,total_fix_asset,fix_asset,fix_asset_clear,building_project_total,building_project,intangabl_asset,good_will,longterm_pending_expense,defer_tax_asset,
+        other_noliquid_asset,noliquid_asset_total,asset_total,liquid_liability,shortterm_loan,finance_liability,derivative_finance_liabilities,note_and_account_payable,note_payable
+        ,account_payable,advance_receive,salart_payable,tax_payable,total_other_payable,interest_payable,dividend_payable,other_payable,noliquid_liability_one_year,other_liquid_liability,
+        liquid_liability_total,noliquid_liability,longterm_loan,bond_payable,longterm_payable_total,longterm_payable,special_account_payable,project_liability,defer_tax_liability
+       ,other_noliquid_liability,noliquid_liability_total ,contractual_liability,liability_total,owner_equity,paid_captial,capital_surplus,reduct_inventory_unit,other_comprehensive_benefit
+       ,surplus_reserve,undistribut_profit,parent_company_equity,some_shareholder_equity,shareholder_equity_total,liabity_and_equity_total)
+           VALUES (#{empName},
+                   #{date},
+                   #{liquidAsset},
+                   #{monetaryFund},
+                   #{financialAsset},
+                   #{notesAndAccountReceive},
+                   #{noteReceive},
+                   #{accountReceive},
+                   #{advancePay},
+                   #{totalOtherReceive},
+                   #{interestReceive},
+                   #{otherReceive},
+                   #{storage},
+                   #{noLiquidAssetOneYear},
+                   #{otherLiquidAsset},
+                   #{liquidAssetTotal},
+                   #{noliquidAsset},
+                   #{financAssetForSell},
+                   #{holdToMaturityInvest},
+                   #{longtermEquaInvest},
+                   #{investalEstate},
+                   #{totalFixAsset},
+                   #{fixAsset},
+                   #{fixAssetClear},
+                   #{buildingProjectTotal},
+                   #{buildingProject},
+                   #{intangablAsset},
+                   #{goodWill},
+                   #{longtermPendingExpense},
+                   #{deferTaxAsset},
+                   #{otherNoliquidAsset},
+                   #{noliquidAssetTotal},
+                   #{assetTotal},
+                   #{liquidLiability},
+                   #{shorttermLoan},
+                   #{financeLiability},
+                   #{derivativeFinanceLiabilities},
+                   #{noteAndAccountPayable},
+                   #{notePayable},
+                   #{accountPayable},
+                   #{advanceReceive},
+                   #{salartPayable},
+                   #{taxPayable},
+                   #{totalOtherPayable},
+                   #{interestPayable},
+                   #{dividendPayable},
+                   #{otherPayable},
+                   #{noliquidLiabilityOneYear},
+                   #{otherLiquidLiability},
+                   #{liquidLiabilityTotal},
+                   #{noliquidLiability},
+                   #{longtermLoan},
+                   #{bondPayable},
+                   #{longtermPayableTotal},
+                   #{longtermPayable},
+                   #{specialAccountPayable},
+                   #{projectLiability},
+                   #{deferTaxLiability},
+                   #{otherNoliquidLiability},
+                   #{noliquidLiabilityTotal},
+                   #{contractualLiability},
+                   #{liabilityTotal},
+                   #{ownerEquity},
+                   #{paidCaptial},
+                   #{capitalSurplus},
+                   #{reductInventoryUnit},
+                   #{otherComprehensiveBenefit},
+                   #{surplusReserve},
+                   #{undistributProfit},
+                   #{parentCompanyEquity},
+                   #{someShareholderEquity},
+                   #{shareholderEquityTotal},
+                   #{liabityAndEquityTotal}
+    )</insert>
+</mapper>

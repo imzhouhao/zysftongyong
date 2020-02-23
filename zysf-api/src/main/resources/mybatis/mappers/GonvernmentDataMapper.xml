@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.GonvernmentDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <!--  <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.EnterpriseCollect">
+          <id column="emp_name" property="empName" />
+          <result column="social_code" property="socialCode" />
+          <result column="market_date" property="marketDate" />
+          <result column="market_model" property="marketModel" />
+          <result column="stock_code" property="stockCode" />
+          <result column="financ_date" property="financDate" />
+          <result column="financ_turn" property="financTurn" />
+          <result column="financ_money" property="financMoney" />
+          <result column="investor" property="investor" />
+          <result column="company_value" property="companyValue" />
+          <result column="is_unicorn" property="isUnicorn" />
+          <result column="invest_to" property="investTo" />
+          <result column="invest_ratio" property="investRatio" />
+          <result column="invest_money" property="investMoney" />
+          <result column="invest_method" property="investMethod" />
+      </resultMap>
+      -->
+    <!-- 通用查询结果列 -->
+    <insert id="addData" parameterType="com.boot.zysf.api.po.GonvernmentData" >
+        INSERT INTO gonvernment_data(year,organizational_code,emp_name,social_code,employee_final_num,total_final_asset,liquid_asset,fixed_asset,
+        accumulated_depreciation,fixed_asset_invest,intangible_asset,un_liquid_asset,
+        total_yearendliabilities,bankloan_amount,employee_salary,shareholder_salary,stock_value,
+        listed_finan_equality,industry_output,operating_income,main_operating_income,product_sale_income,
+        commodity_sale_income,business_cost,selling_expense,manage_expense,finance_expense,internal_enterprise_funds,sale_profit,out_business_income,
+        out_business_cost,total_profit,net_profit,tax
+        )
+           VALUES (#{year},
+                   #{organizationalCode},
+                   #{empName},
+                   #{socialCode},
+                   #{employeeFinalNum},
+                   #{totalFinalAsset},
+                   #{liquidAsset},
+                   #{fixedAsset},
+                   #{accumulatedDepreciation},
+                   #{fixedAssetInvest},
+                   #{intangibleAsset},
+                   #{unLiquidAsset},
+                   #{totalYearendliabilities},
+                   #{bankloanAmount},
+                   #{employeeSalary},
+                   #{shareholderSalary},
+                   #{stockValue},
+                   #{listedFinanEquality},
+                   #{industryOutput},
+                   #{operatingIncome},
+                   #{mainOperatingIncome},
+                   #{productSaleIncome},
+                   #{commoditySaleIncome},
+                   #{businessCost},
+                   #{sellingExpense},
+                   #{manageExpense},
+                   #{financeExpense},
+                   #{internalEnterpriseFunds},
+                   #{saleProfit},
+                   #{outBusinessIncome},
+                   #{outBusinessCost},
+                   #{totalProfit},
+                   #{netProfit},
+                   #{tax}
+
+
+    )</insert>
+</mapper>

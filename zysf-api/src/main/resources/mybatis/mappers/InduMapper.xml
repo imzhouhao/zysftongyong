@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.InduMapper">
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.Indu">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="category" property="category" />
+        <result column="label" property="label" />
+        <result column="symbol_size" property="symbolSize" />
+        <result column="ignores" property="ignores" />
+        <result column="flag" property="flag" />
+        <result column="numbers" property="numbers" />
+        <result column="money" property="money" />
+        <result column="lat" property="lat" />
+        <result column="lng" property="lng" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <select id="findByLabel" parameterType="string" resultMap="BaseResultMap">
+        select * from indu where label=#{name}
+    </select>
+    <select id ="listAll" resultMap="BaseResultMap">
+        select  * from indu
+    </select>
+    <insert id="addInto" parameterType="com.boot.zysf.api.po.Indu" >
+        INSERT INTO indu(name,category,label,symbol_size,ignores,flag,numbers,money,lat,lng)
+           VALUES ( #{name},
+                   #{category},
+                   #{label},
+                   #{symbolSize},
+                   #{ignores},
+                   #{flag},
+                   #{numbers},
+                   #{money},
+                   #{lat},
+                   #{lng}
+    )</insert>
+</mapper>

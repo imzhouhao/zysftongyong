@@ -1,0 +1,31 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://localhost:3306/zysf?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    # 数据库连接池
+    hikari:
+      minimum-idle: 2           # 数据库连接池的最小维持连接数
+      connection-timeout: 5000   # 等待连接获取的最大超时时间,等待池中连接的最大毫秒数,默认30000（30秒）
+      maximum-pool-size: 3
+
+mybatis:
+  mapper-locations: classpath:mybatis/mappers/*Mapper.xml
+  type-aliases-package: com.boot.zysf.api.po
+  config-location: classpath:mybatis/mybatis-config.xml
+#showSql
+logging:
+  level:
+    com:
+      boot:
+        zysf:
+          api:
+            mapper: debug
+

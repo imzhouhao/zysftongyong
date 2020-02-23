@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.CashFlowMapper">
+
+    <!--    &lt;!&ndash; 通用查询映射结果 &ndash;&gt;-->
+    <!--   <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.Assetliability">&ndash;&gt;-->
+    <!--        <id column="emp_name" property="empName" />-->
+    <!--        <result column="saleState" property="saleState" />-->
+    <!--        <result column="legalRepe" property="legalRepe" />-->
+    <!--        <result column="regCapital" property="regCapital" />-->
+    <!--        <result column="date" property="date" />-->
+    <!--        <result column="sheng" property="sheng" />-->
+    <!--        <result column="city" property="city" />-->
+    <!--        <result column="phone" property="phone" />-->
+    <!--        <result column="morePhone" property="morePhone" />-->
+    <!--        <result column="email" property="email" />-->
+    <!--        <result column="social_code" property="socialCode" />-->
+    <!--        <result column="taxer_id" property="taxerId" />-->
+    <!--        <result column="regist_id" property="registId" />-->
+    <!--        <result column="ossication_code" property="ossicationCode" />-->
+    <!--        <result column="insurance_num" property="insuranceNum" />-->
+    <!--        <result column="emp_type" property="empType" />-->
+    <!--        <result column="industory" property="industory" />-->
+    <!--        <result column="url" property="url" />-->
+    <!--        <result column="address" property="address" />-->
+    <!--        <result column="business_scope" property="businessScope" />-->
+    <!--    </resultMap>-->
+    <!-- 通用查询结果列 -->
+    <insert id="addData" parameterType="com.boot.zysf.api.po.CashFlow" >
+        INSERT INTO cash_flow(emp_name,date,sell_cash_flow,sell_and_service_cash,tax_return,other_cash,operate_cash_in,purchase_cash,employee_cash_pay,tax_pay,
+        other_cash_pay,operate_cash_out,operate_cash_net_cash,invest_cash_flow,receive_invest_cash,get_invest_cash,net_cash,operate_cash,dispose_soncompany_net_cash,other_invest_cash
+        ,invest_cash_in,long_term_pay_cash,invest_pay_cash,get_soncompany_pay_net_cash,pay_other_invest_cash,invest_cash_out,invest_net_cash,finance_cash_flow,invest_cash_take_in,son_company_from_shareholder,cash_by_borrow,
+        get_other_finance_cash,finance_cash_in,repay_debt_cash,interest_pay_cash,son_company_pay_to_shareholder,other_finance_pay_cash,finance_cash_out,net_cash_by_finance,impact_by_rate
+        ,net_increase_cash,cash_equivalent_end,cash_equivalent_in,supplement,net_profit_adjust_cash,net_profit,asset_impar_reserve,depreciation,intangable_asset,longterm_pend_expense,
+        dispose_asset_loss,fixAsset_loss,finance_cost,invest_loss,defer_asset_loss,defer_asset_add,operate_receive_loss,operate_receive_add,other,indirect_cash,activity_no_cash,debt_to_asset,
+        convertible_oneyear,cash_net_change,cash_end_balance,cash_begin_balance,cash_equivalent_end_balance,cash_equivalent_begin_balance,indirect_net_increase_cash)
+           VALUES (#{empName},
+                   #{date},
+                   #{sellCashFlow},
+                   #{sellAndServiceCash},
+                   #{taxReturn},
+                   #{otherCash},
+                   #{operateCashIn},
+                   #{purchaseCash},
+                   #{employeeCashPay},
+                   #{taxPay},
+                   #{otherCashPay},
+                   #{operateCashOut},
+                   #{operateCashNetCash},
+                   #{investCashFlow},
+                   #{receiveInvestCash},
+                   #{getInvestCash},
+                   #{netCash},
+                   #{operateCash},
+                   #{disposeSoncompanyNetCash},
+                   #{otherInvestCash},
+                   #{investCashIn},
+                   #{longTermPayCash},
+                   #{investPayCash},
+                   #{getSoncompanyPayNetCash},
+                   #{payOtherInvestCash},
+                   #{investCashOut},
+                   #{investNetCash},
+                   #{financeCashFlow},
+                   #{investCashTakeIn},
+                   #{sonCompanyFromShareholder},
+                   #{cashByBorrow},
+                   #{getOtherFinanceCash},
+                   #{financeCashIn},
+                   #{repayDebtCash},
+                   #{interestPayCash},
+                   #{sonCompanyPayToShareholder},
+                   #{otherFinancePayCash},
+                   #{financeCashOut},
+                   #{netCashByFinance},
+                   #{impactByRate},
+                   #{netIncreaseCash},
+                   #{cashEquivalentEnd},
+                   #{cashEquivalentIn},
+                   #{supplement},
+                   #{netProfitAdjustCash},
+                   #{netProfit},
+                   #{assetImparReserve},
+                   #{depreciation},
+                   #{intangableAsset},
+                   #{longtermPendExpense},
+                   #{disposeAssetLoss},
+                   #{fixAssetLoss},
+                   #{financeCost},
+                   #{investLoss},
+                   #{deferAssetLoss},
+                   #{deferAssetAdd},
+                   #{operateReceiveLoss},
+                   #{operateReceiveAdd},
+                   #{other},
+                   #{indirectCash},
+                   #{activityNoCash},
+                   #{debtToAsset},
+                   #{convertibleOneyear},
+                   #{cashNetChange},
+                   #{cashEndBalance},
+                   #{cashBeginBalance},
+                   #{cashEquivalentEndBalance},
+                   #{cashEquivalentBeginBalance},
+                   #{indirectNetIncreaseCash}
+
+    )</insert>
+</mapper>

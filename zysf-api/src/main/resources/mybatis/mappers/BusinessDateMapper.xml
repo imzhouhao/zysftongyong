@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boot.zysf.api.mapper.BusinessDataMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.boot.zysf.api.po.BusinessData">
+        <id column="emp_name" property="empName" />
+        <result column="saleState" property="saleState" />
+        <result column="legalRepe" property="legalRepe" />
+        <result column="regCapital" property="regCapital" />
+        <result column="date" property="date" />
+        <result column="sheng" property="sheng" />
+        <result column="city" property="city" />
+        <result column="phone" property="phone" />
+        <result column="morePhone" property="morePhone" />
+        <result column="email" property="email" />
+        <result column="social_code" property="socialCode" />
+        <result column="taxer_id" property="taxerId" />
+        <result column="regist_id" property="registId" />
+        <result column="ossication_code" property="ossicationCode" />
+        <result column="insurance_num" property="insuranceNum" />
+        <result column="emp_type" property="empType" />
+        <result column="industory" property="industory" />
+        <result column="url" property="url" />
+        <result column="address" property="address" />
+        <result column="business_scope" property="businessScope" />
+    </resultMap>
+    <!-- 通用查询结果列 -->
+    <insert id="addDate" parameterType="com.boot.zysf.api.po.BusinessData" >
+        INSERT INTO business_data(emp_name,sale_state,legal_repe,reg_capital,sheng,date,city,phone,more_phone,email,social_code,taxer_id,regist_id,ossication_code,insurance_num
+        ,emp_type,industory,url,address,business_scope)
+           VALUES (#{empName},
+                   #{saleState},
+                   #{legalRepe},
+                   #{regCapital},
+                   #{sheng},
+                   #{date},
+                   #{city},
+                   #{phone},
+                   #{morePhone},
+                   #{email},
+                   #{socialCode},
+                   #{taxerId},
+                   #{registId},
+                   #{ossicationCode},
+                   #{insuranceNum},
+                   #{empType},
+                   #{industory},
+                   #{url},
+                   #{address},
+                   #{businessScope}
+    )</insert>
+
+    <select id="getSheng" parameterType="integer" resultType="com.boot.zysf.api.po.v0.ComInfo">
+SELECT t2.id empId,t2.emp_name empName,t2.lat lat,t2.lng lng
+FROM  business_data t2
+where t2.tags2 LIKE CONCAT(
+'%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE t3.id = #{induId}
+),
+'%'
+)
+AND CONCAT("中国,",t2.sheng) in(
+SELECT mername
+from region t1
+where id = #{regionId}
+)
+
+    </select>
+    <select id="getShengZhuan" parameterType="integer" resultType="com.boot.zysf.api.po.ZhuanLi">
+SELECT t2.*
+FROM zhuan_li t2, business_data t1
+WHERE t1.tags2 LIKE CONCAT('%',
+(
+   SELECT t3.`name`
+   FROM industroy_tupu t3
+   WHERE id =  #{induId}  ),
+   '%')
+AND  t2.emp_name = t1.emp_name
+AND  CONCAT("中国,",t1.sheng) in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+    </select>
+    <select id="getShengRen" parameterType="integer" resultType="com.boot.zysf.api.po.RenCai">
+SELECT t2.*
+FROM ren_cai t2, business_data t1
+WHERE t1.tags2 LIKE CONCAT('%',
+(
+   SELECT t3.`name`
+   FROM industroy_tupu t3
+   WHERE id =  #{induId}  ),
+   '%')
+AND  t2.emp_name = t1.emp_name
+AND  CONCAT("中国,",t1.sheng) in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+    </select>
+
+    <select id="getShi" parameterType="integer" resultType="com.boot.zysf.api.po.v0.ComInfo">
+SELECT t2.id empId,t2.emp_name empName,t2.lat lat,t2.lng lng
+FROM  business_data t2
+where t2.tags2 LIKE CONCAT(
+'%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE t3.id = #{induId}
+),
+'%'
+)
+AND CONCAT("中国,",t2.sheng,",",t2.city) in(
+SELECT mername
+from region t1
+where id = #{regionId}
+)
+
+    </select>
+
+    <select id="getShiZhuan" parameterType="integer" resultType="com.boot.zysf.api.po.ZhuanLi">
+SELECT t2.*
+FROM zhuan_li t2, business_data t1
+WHERE t1.tags2 LIKE CONCAT('%',
+(
+   SELECT t3.`name`
+   FROM industroy_tupu t3
+   WHERE id =  #{induId}  ),
+   '%')
+AND  t2.emp_name = t1.emp_name
+AND  CONCAT("中国,",t1.sheng,",",t1.city) in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+    </select>
+
+    <select id="getShiRen" parameterType="integer" resultType="com.boot.zysf.api.po.RenCai">
+SELECT t2.*
+FROM ren_cai t2, business_data t1
+WHERE t1.tags2 LIKE CONCAT('%',
+(
+   SELECT t3.`name`
+   FROM industroy_tupu t3
+   WHERE id =  #{induId}  ),
+   '%')
+AND  t2.emp_name = t1.emp_name
+AND  CONCAT("中国,",t1.sheng,",",t1.city) in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+    </select>
+    <select id="getQu" parameterType="integer" resultType="com.boot.zysf.api.po.v0.ComInfo">
+SELECT t2.id empId,t2.emp_name empName,t2.lat lat,t2.lng lng
+FROM  business_data t2
+where t2.tags2 LIKE CONCAT(
+'%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE t3.id =  #{induId}
+),
+'%'
+)
+AND CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3) in(
+SELECT mername
+from region t1
+where id = #{regionId}
+)
+
+    </select>
+
+    <select id="getQuZhuan" parameterType="integer" resultType="com.boot.zysf.api.po.ZhuanLi">
+SELECT t2.*
+FROM zhuan_li t2, business_data t1
+WHERE t1.tags2 LIKE CONCAT('%',
+(
+   SELECT t3.`name`
+   FROM industroy_tupu t3
+   WHERE id =  #{induId}  ),
+   '%')
+AND  t2.emp_name = t1.emp_name
+AND  CONCAT("中国,",t1.sheng,",",t1.city,",",t1.add3) in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+
+
+    </select>
+    <select id="getQuRen" parameterType="integer" resultType="com.boot.zysf.api.po.RenCai">
+SELECT t2.*
+FROM ren_cai t2, business_data t1
+WHERE t1.tags2 LIKE CONCAT('%',
+(
+   SELECT t3.`name`
+   FROM industroy_tupu t3
+   WHERE id =  #{induId}  ),
+   '%')
+AND  t2.emp_name = t1.emp_name
+AND  CONCAT("中国,",t1.sheng,",",t1.city,",",t1.add3) in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+    </select>
+    <select id="getChina" parameterType="integer" resultType="com.boot.zysf.api.po.v0.ComInfo">
+SELECT t2.id empId,t2.emp_name empName,t2.lat lat,t2.lng lng
+FROM  business_data t2
+where t2.tags2 LIKE CONCAT(
+'%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE t3.id = #{induId}
+),
+'%'
+)
+    </select>
+    <select id="getCompanyNum" resultType="java.lang.Integer">
+    SELECT COUNT(t1.emp_name)
+FROM business_data t1
+WHERE
+ t1.tags2 LIKE CONCAT('%',
+(
+   SELECT t3.`name`
+   FROM industroy_tupu t3
+   WHERE id =  #{induId}),
+   '%')
+AND
+<if test="level == 0">
+    CONCAT("中国")
+</if>
+        <if test="level == 1">
+    CONCAT("中国,",t1.sheng)
+ </if>
+ <if test="level==2">
+     CONCAT("中国,",t1.sheng,",",t1.city)
+ </if>
+        <if test="level==3">
+            CONCAT("中国,",t1.sheng,",",t1.city,",",t1.add3)
+        </if>
+ in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+    </select>
+
+    <select id="getDate" resultType="java.util.Date">
+        SELECT t1.date
+        FROM business_data t1
+        WHERE
+        t1.tags2 LIKE CONCAT('%',
+        (
+        SELECT t3.`name`
+        FROM industroy_tupu t3
+        WHERE id =  #{induId}),
+        '%')
+        AND
+        <if test="level == 0">
+            CONCAT("中国")
+        </if>
+        <if test="level == 1">
+            CONCAT("中国,",t1.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t1.sheng,",",t1.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t1.sheng,",",t1.city,",",t1.add3)
+        </if>
+        in(
+        SELECT mername
+        from region t4
+        where id = #{regionId}
+        )
+    </select>
+    <select id="getShiTi" resultType="java.lang.Integer">
+        SELECT COUNT(t1.emp_name)
+        FROM business_data t1
+        WHERE
+        t1.tags2 LIKE CONCAT('%',
+        (
+        SELECT t3.`name`
+        FROM industroy_tupu t3
+        WHERE id =  #{induId}),
+        '%')
+
+        AND
+        <if test="level == 0">
+            CONCAT("中国")
+        </if>
+        <if test="level == 1">
+            CONCAT("中国,",t1.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t1.sheng,",",t1.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t1.sheng,",",t1.city,",",t1.add3)
+        </if>
+        in(
+        SELECT mername
+        from region t4
+        where id = #{regionId}
+        )
+    </select>
+    <select id="getEmploNum" resultType="java.lang.Integer">
+        SELECT
+SUM(employee_num)
+FROM enterprise_data t1
+LEFT JOIN business_data t2 ON t1.emp_name = t2.emp_name
+WHERE t2.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{induId}
+),
+'%')
+AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if>
+        in(
+        SELECT mername
+        from region t4
+        where id = #{regionId}
+        )
+    </select>
+    <select id="getTax" resultType="java.lang.Double">
+SELECT
+SUM(tax_and_addendum)/SUM(business_income_total)
+FROM 01_lirunbiao t1
+LEFT JOIN business_data t2 ON t1.name = t2.emp_name
+WHERE t2.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{induId}
+),
+'%')
+        AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if> in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+    </select>
+    <select id="getJingZheng" resultType="com.boot.zysf.api.po.InduAccess.JingZhengV0">
+        SELECT
+        SUM(t1.main_operating_income_thounsand)/1000/SUM(t1.employee_num) meanIncome
+        ,SUM(t1.net_profit_thousand)/SUM(t1.main_operating_income_thounsand) netProfit
+        ,SUM(t1.net_profit_thousand)/SUM(t1.asset_total) aevergeReturn
+
+        FROM enterprise_data t1
+LEFT JOIN business_data t2 ON t1.emp_name = t2.emp_name
+WHERE t2.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{induId}
+),
+'%')
+
+ AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if> in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+    </select>
+    <select id="getZhuanli" resultType="java.lang.Integer">
+
+        SELECT COUNT(t2.emp_id)
+FROM zhuan_li t2, business_data t1
+WHERE t1.tags2 LIKE CONCAT('%',
+(
+   SELECT t3.`name`
+   FROM industroy_tupu t3
+   WHERE id = #{induId}),
+   '%')
+AND  t2.emp_name = t1.emp_name
+        AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t1.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t1.sheng,",",t1.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t1.sheng,",",t1.city,",",t1.add3)
+        </if> in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+    </select>
+    <select id="getEmployNum" resultType="java.lang.Integer">
+
+        SELECT
+SUM(employee_num)
+FROM enterprise_data t1
+LEFT JOIN business_data t2  ON t1.emp_name = t2.emp_name
+WHERE t2.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{induId}
+),
+'%')
+        AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if>  in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+    </select>
+    <select id="getFuZhan" resultType="java.lang.Double">
+SELECT
+SUM(t1.liability_total)/ SUM(t1.asset_total)
+FROM 01_zichanfuzhaibiao t1
+LEFT JOIN business_data t2  ON t1.`name` = t2.emp_name
+WHERE t2.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{induId}
+),
+'%')
+        AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if>  in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+
+
+
+    </select>
+    <select id="getChouZi" resultType="java.lang.Double">
+        SELECT
+        SUM(t1.finance_cash_in)
+        FROM 01_xianjinliuliangbiao t1
+        LEFT JOIN business_data t2  ON t1.`name` = t2.emp_name
+        WHERE t2.tags2 LIKE CONCAT('%',
+        (
+        SELECT t3.`name`
+        FROM industroy_tupu t3
+        WHERE id = #{induId}
+        ),
+        '%')
+        AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if>  in(
+        SELECT mername
+        from region t4
+        where id = #{regionId}
+        )
+
+    </select>
+    <select id="getTouZi" resultType="java.lang.Double">
+
+        SELECT
+        SUM(t1.invest_cash_in)
+        FROM 01_xianjinliuliangbiao t1
+        LEFT JOIN business_data t2  ON t1.`name` = t2.emp_name
+        WHERE t2.tags2 LIKE CONCAT('%',
+        (
+        SELECT t3.`name`
+        FROM industroy_tupu t3
+        WHERE id = #{induId}
+        ),
+        '%')
+        AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if>  in(
+        SELECT mername
+        from region t4
+        where id = #{regionId}
+        )
+
+    </select>
+    <select id="getIncomeSpeed" resultType="java.lang.Double">
+
+        SELECT SUM(t1.business_income_total)
+FROM 01_lirunbiao t1
+LEFT JOIN business_data t2  ON t1.`name` = t2.emp_name
+WHERE t2.tags2 LIKE CONCAT('%',
+(
+	SELECT t3.`name`
+	FROM industroy_tupu t3
+	WHERE id = #{induId}
+),
+'%')
+        AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if>  in(
+SELECT mername
+from region t4
+where id = #{regionId}
+)
+AND DATE_FORMAT(t1.times,'%Y')  in (2018,2019)
+GROUP BY DATE_FORMAT(t1.times,'%Y')
+
+
+    </select>
+    <select id="getProfitSpeed" resultType="java.lang.Double">
+        SELECT SUM(t1.net_profit)
+        FROM 01_lirunbiao t1
+        LEFT JOIN business_data t2  ON t1.`name` = t2.emp_name
+        WHERE t2.tags2 LIKE CONCAT('%',
+        (
+        SELECT t3.`name`
+        FROM industroy_tupu t3
+        WHERE id = #{induId}
+        ),
+        '%')
+        AND <if test="level == 0">
+        CONCAT("中国")
+    </if>
+        <if test="level == 1">
+            CONCAT("中国,",t2.sheng)
+        </if>
+        <if test="level==2">
+            CONCAT("中国,",t2.sheng,",",t2.city)
+        </if>
+        <if test="level==3">
+            CONCAT("中国,",t2.sheng,",",t2.city,",",t2.add3)
+        </if>  in(
+        SELECT mername
+        from region t4
+        where id = #{regionId}
+        )
+        AND DATE_FORMAT(t1.times,'%Y')  in (2018,2019)
+        GROUP BY DATE_FORMAT(t1.times,'%Y')
+    </select>
+
+    <select id="findLatNotNull" resultType="com.boot.zysf.api.po.BusinessData">
+        select *
+        from business_data
+        where lat is not null
+
+    </select>
+
+</mapper>
