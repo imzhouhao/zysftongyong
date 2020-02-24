@@ -85,4 +85,6 @@ public interface BusinessDataMapper extends BaseMapper<BusinessData> {
 
     List<BusinessData>findLatNotNull();
 
+
+
 }

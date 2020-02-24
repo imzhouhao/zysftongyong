@@ -49,12 +49,15 @@ private LocalDateTime utime;
 //产业
 private String indu;
 
+private String code1;
+
     public static final String ID = "id";
     public static final String PARENT_ID = "parent_id";
     public static final String NAME = "name";
     public static final String CTIME = "ctime";
     public static final String UTIME = "utime";
     public static final String CODE = "code";
+    public static final String CODE1 = "code1";
     @Override
     protected Serializable pkVal() {
         return this.id;

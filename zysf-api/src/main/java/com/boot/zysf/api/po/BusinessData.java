@@ -95,4 +95,12 @@ public class BusinessData  extends Model<BusinessData> {
     }
     public static final String Industory = "industory";
     public static final String BusinessScope = "business_scope";
+    public static final String ID = "id";
+    public static final String NAME = "empName";
+    public static final String CODE = "code";
+    public static final String ADDRESS = "address";
+    public static final String LNG = "lng";
+    public static final String LAT = "lat";
+    public static final String CTIME = "ctime";
+    public static final String UTIME = "utime";
 }

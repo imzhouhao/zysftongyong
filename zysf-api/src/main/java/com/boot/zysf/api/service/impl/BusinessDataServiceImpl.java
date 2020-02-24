@@ -7,9 +7,12 @@ import com.boot.zysf.api.mapper.*;
 import com.boot.zysf.api.po.*;
 import com.boot.zysf.api.po.InduAccess.*;
 import com.boot.zysf.api.po.Model.CommonModel;
+import com.boot.zysf.api.po.v0.ChanYeTuPu;
 import com.boot.zysf.api.po.v0.CompanyInfo;
+import com.boot.zysf.api.po.v0.PK;
 import com.boot.zysf.api.po.v0.QiYeTuPu;
 import com.boot.zysf.api.service.BusinessDataService;
+import com.boot.zysf.api.service.IIndustrialCategoryService;
 import com.boot.zysf.api.util.BusinessDateRead;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +47,9 @@ public class BusinessDataServiceImpl extends ServiceImpl<BusinessDataMapper, Bus
 
     @Autowired
     RegionMapper regionMapper;
+
+    @Autowired
+    IIndustrialCategoryService iIndustrialCategoryService;
     @Override
     public List<BusinessData> getBusinessData(MultipartFile file){
         List<BusinessData> businessDataList = businessDateRead.getExcelInfo(file);
@@ -266,6 +272,8 @@ public class BusinessDataServiceImpl extends ServiceImpl<BusinessDataMapper, Bus
         QueryWrapper<Region> query1 = new QueryWrapper<>();
         query1.eq("id", Integer.parseInt(regionId));
         Region region = regionMapper.selectOne(query1);
+        System.out.println(regionId);
+        System.out.println(region);
         Integer level = region.getLevel();
         String china = "100000";
 
@@ -507,7 +515,7 @@ public class BusinessDataServiceImpl extends ServiceImpl<BusinessDataMapper, Bus
             profitSpeed.put("本地",0.0);
         }
 
-        else {
+        else if(incomeSpeed1.size()>=2&&incomeSpeed2.size()>=2&&profitSpeed1.size()>=2&&profitSpeed2.size()>=2) {
             incomeSpeed.put("全国",incomeSpeed1.get(0)/incomeSpeed1.get(1)-1);
             incomeSpeed.put("本地",incomeSpeed2.get(0)/incomeSpeed1.get(1)-1);
 
@@ -516,6 +524,154 @@ public class BusinessDataServiceImpl extends ServiceImpl<BusinessDataMapper, Bus
         }
         return new ChengZhang(incomeSpeed,profitSpeed);
 
+    }
+
+    @Override
+    public Double  getZ(String induId, String regionId){
+
+        Map<String,List<String>> map =new HashMap<>();
+        String china = "100000";
+        //生存期
+        Double shengCun = getShengCun(induId, regionId);
+        Double shengCun1 = getShengCun(induId, china);
+        if(shengCun==null||shengCun1==null) return -1000000.0;
+
+        //覆盖实体
+        Integer shiTi = getShiTi(induId, regionId);
+        Integer shiTi1 = getShiTi(induId, china);
+        if(shiTi==null||shiTi1==null) return -1000000.0;
+
+        //平均就业人数
+        QueryWrapper<Region> query1 = new QueryWrapper<>();
+        query1.eq("id", Integer.parseInt(regionId));
+        Region region = regionMapper.selectOne(query1);
+        Integer level = region.getLevel();
+                //本地
+        Integer emploNum2 = businessDataMapper.getEmploNum(Integer.parseInt(induId), Integer.parseInt(regionId), level);
+        Integer companyNum2 = businessDataMapper.getCompanyNum(Integer.parseInt(induId), Integer.parseInt(regionId), level);
+
+
+                //全国
+        Integer emploNum = businessDataMapper.getEmploNum(Integer.parseInt(induId), 100000, 0);
+        Integer companyNum = businessDataMapper.getCompanyNum(Integer.parseInt(induId), 100000, 0);
+
+        if(emploNum==null||companyNum2==null||companyNum==null||emploNum2==null){
+            return -1000000.0;
+        }
+        Integer employnum = emploNum2/companyNum2;
+        Integer employnum1 = emploNum/companyNum;
+
+        //人均营业收入
+        JingZheng jingZheng = getJingZheng(induId, regionId);
+        Map<String, Double> meanIncome = jingZheng.getMeanIncome();
+        Double meanincome = meanIncome.get("本地");
+        Double meanincome2 = meanIncome.get("全国");
+
+        if(meanincome==null||meanincome2==null) return -1000000.0;
+        //平均利润率
+        Map<String, Double> netProfit = jingZheng.getNetProfit();
+        Double netprofit = netProfit.get("本地");
+        Double netprofit2 = netProfit.get("全国");
+        if(netprofit==null||netprofit2==null) return -1000000.0;
+
+        //专利密度
+        ChuangXin chuangXin = getChuangXin(induId, regionId);
+        Map<String, Double> miDu = chuangXin.getMiDu();
+        Double midu = miDu.get("本地");
+        Double midu1 = miDu.get("全国");
+        if(midu==null||midu1==null) return -1000000.0;
+
+        //主营业务同比增速
+        ChengZhang chengZhang = getChengZhang(induId,regionId);
+        Map<String, Double> incomeSpeed = chengZhang.getIncomeSpeed();
+        Double incomespeed = incomeSpeed.get("本地");
+        Double incomespeed2 = incomeSpeed.get("全国");
+        if(incomespeed==null||incomespeed2==null) return -1000000.0;
+
+        //净利润率同比增速
+        Map<String, Double> profitSpeed = chengZhang.getProfitSpeed();
+        Double profitspeed = profitSpeed.get("本地");
+        Double profitspeed2 = profitSpeed.get("全国");
+        if(profitspeed==null||profitspeed2==null) return -1000000.0;
+
+
+        if(shengCun1*shiTi1*employnum1*meanincome2*netprofit2*midu1*incomespeed2*profitspeed2==0.0) return -1.0;
+
+        Double z = (shengCun/shengCun1+shiTi/shiTi1+employnum/employnum1+meanincome/meanincome2+netprofit/netprofit2+midu/midu1+incomespeed/incomespeed2+profitspeed/profitspeed2)/8;
+
+        return z;
+
+    }
+
+    @Override
+    public PK getPK (String induId, String regionId,String regionId1){
+        List<TreeNode1> tree2 = iIndustrialCategoryService.getTree2(induId);
+        //评估信息
+        Map<String, ChanYePingGu> pingGu = new HashMap<>();
+        FaYu faYu =getFaYu(induId, regionId);
+        GongXian gongXian =getGongXian(induId, regionId);
+        JingZheng jingZheng = getJingZheng(induId, regionId);
+        ChuangXin chuangXin = getChuangXin(induId, regionId);
+        ZiBen ziBen = getZiBen(induId, regionId);
+        ChengZhang chengZhang = getChengZhang(induId, regionId);
+        ChanYePingGu chanYePingGu = new ChanYePingGu(faYu,gongXian,jingZheng,chuangXin,ziBen,chengZhang);
+
+        FaYu faYu1 =getFaYu(induId, regionId1);
+        GongXian gongXian1 =getGongXian(induId, regionId);
+        JingZheng jingZheng1 = getJingZheng(induId, regionId);
+        ChuangXin chuangXin1 = getChuangXin(induId, regionId);
+        ZiBen ziBen1 = getZiBen(induId, regionId);
+        ChengZhang chengZhang1 = getChengZhang(induId, regionId);
+        ChanYePingGu chanYePingGu1 = new ChanYePingGu(faYu1,gongXian1,jingZheng1,chuangXin1,ziBen1,chengZhang1);
+
+        pingGu.put(regionId,chanYePingGu);
+        pingGu.put(regionId1,chanYePingGu1);
+
+        Map<String,Map<String,String>> zongHe = new HashMap<>();
+        String you = "";
+        String lie = "";
+        String que = "";
+        String you1 = "";
+        String lie1 = "";
+        String que1 = "";
+        Map<String,String> r1 = new HashMap<>();
+        Map<String,String> r2 = new HashMap<>();
+        //优劣势
+        Double z1 = getZ(induId, regionId);
+        if(z1>=1.0) you = you+induId+",";
+        else if(z1<1.0&&z1>-1000000.0) lie = lie+induId+",";
+        else if(z1==0.0) que = que +induId+",";
+        for(TreeNode1 node  :  tree2){
+            String id = node.getId();
+            Double z = getZ(id, regionId);
+            if(z>=1.0) you = you+id+",";
+            else if(z<1.0&&z>-1000000.0) lie = lie+id+",";
+            else if(z==0.0) que = que +id+",";
+        }
+        r1.put("优势",you);
+        r1.put("劣势",lie);
+        r1.put("缺失",que);
+        Double z2 = getZ(induId, regionId1);
+        if(z2>=1.0) you1 = you1+induId+",";
+        else if(z2<1.0&&z2>-1000000.0) lie1 = lie1+induId+",";
+        else if(z2==0.0) que1 = que1 +induId+",";
+        for(TreeNode1 node  :  tree2){
+            String id = node.getId();
+            Double z = getZ(id, regionId1);
+            if(z>=1.0) you1 = you1+id+",";
+            else if(z<1.0&&z>-1000000.0) lie1 = lie1+id+",";
+            else if(z==0.0) que = que1 +id+",";
+        }
+        r2.put("优势",you1);
+        r2.put("劣势",lie1);
+        r2.put("缺失",que1);
+        zongHe.put(regionId,r1);
+        zongHe.put(regionId1,r2);
+
+        //上下游关系图谱
+
+        PK pk = new PK(pingGu,zongHe,tree2);
+        return pk;
     }
 
 

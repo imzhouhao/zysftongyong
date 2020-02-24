@@ -1,6 +1,7 @@
 package com.boot.zysf.api.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.api.R;
 import com.boot.zysf.api.po.BusinessData;
 import com.boot.zysf.api.service.BusinessDataService;
 import com.boot.zysf.api.service.IIndustrialCategoryService;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/industrial-tupu")
@@ -25,8 +28,11 @@ public class IndustroyTupuController {
 //    @Autowired
 //    Tagging tagging;
     @PostMapping(value = "/addIndustroy", headers = "content-type=multipart/form-data")
-    public void addInto2(@RequestParam(value = "file", required = true) MultipartFile file){
-        industryTupuRead.getExcelInfo(file);
+    public R addInto2(@RequestParam(value = "file", required = true) MultipartFile file){
+        Integer excelInfo = industryTupuRead.getExcelInfo(file);
+        Map<String,Integer> map = new HashMap<>();
+        map.put("新增",excelInfo);
+        return R.ok(map);
     }
 
 //    @GetMapping("/tag")

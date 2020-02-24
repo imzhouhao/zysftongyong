@@ -50,7 +50,7 @@ public class IndustryRead {
         return errorMsg;
     }
 
-    public void getExcelInfo(MultipartFile mFile){
+    public Integer getExcelInfo(MultipartFile mFile){
         String fileName = mFile.getOriginalFilename();
         List<IndustrialCategory> industrialCategoryList=new ArrayList<IndustrialCategory>();
         try{
@@ -60,9 +60,11 @@ public class IndustryRead {
             }
             //System.out.println(isExcel2003);
 
-            creatExcel(mFile.getInputStream(),isExcel2003);
+            Integer integer = creatExcel(mFile.getInputStream(), isExcel2003);
+            return integer;
         }catch (Exception e){
             e.printStackTrace();
+            return -1;
         }
 
     }
@@ -72,18 +74,21 @@ public class IndustryRead {
         IndustrialCategory one = iIndustrialCategoryService.getOne(query);
         return one;
     }
-    public void creatExcel(InputStream is, boolean isExcel2003){
+    public Integer creatExcel(InputStream is, boolean isExcel2003){
         List<IndustrialCategory> industrialCategoryList=new ArrayList<IndustrialCategory>();
         try{
             Workbook wb =new XSSFWorkbook(is);
-            readExcelValue(wb);
+            Integer integer = readExcelValue(wb);
+            return integer;
         } catch (IOException e) {
             e.printStackTrace();
+            return -1;
         }
     }
-    private void readExcelValue(Workbook wb) {
+    private Integer readExcelValue(Workbook wb) {
+        Integer count = 0;
         Sheet sheet = null;
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i <  wb.getNumberOfSheets(); i++) {
             sheet = wb.getSheetAt(i);
             this.totalRows = sheet.getPhysicalNumberOfRows();
             if (totalRows > 1 && sheet.getRow(2) != null) {
@@ -101,6 +106,10 @@ public class IndustryRead {
                     industrialCategory.setName(yijihangye);
                     iIndustrialCategoryService.save(industrialCategory);
                     yijihangyeid = industrialCategory.getId();
+                    count++;
+                }
+                else{
+                    yijihangyeid = getByName(yijihangye).getId();
                 }
             }
             for (int r = 2; r < totalRows; r++) {
@@ -130,6 +139,7 @@ public class IndustryRead {
                                 industrialCategory.setCode(code);
                                 iIndustrialCategoryService.save(industrialCategory);
                                 parentId = industrialCategory.getId();
+                                count++;
                             } else {
                                 parentId = getByName(value).getId();
                             }
@@ -150,6 +160,7 @@ public class IndustryRead {
                                 industrialCategory.setCode(code);
                                 iIndustrialCategoryService.save(industrialCategory);
                                 parentId = industrialCategory.getId();
+                                count++;
                             } else {
                                 parentId = getByName(value).getId();
                             }
@@ -177,6 +188,7 @@ public class IndustryRead {
                                 industrialCategory.setCode(code);
                                 iIndustrialCategoryService.save(industrialCategory);
                                 parentId = industrialCategory.getId();
+                                count++;
                             } else {
                                 parentId = getByName(value).getId();
                             }
@@ -203,6 +215,7 @@ public class IndustryRead {
                                 industrialCategory.setCode("last");
                                 iIndustrialCategoryService.save(industrialCategory);
                                 c=c+this.totalCells;
+                                count++;
                             }
                             else {//存在六级行业，
                                 Cell cell1 = row.getCell(c+1);
@@ -219,6 +232,7 @@ public class IndustryRead {
                                     industrialCategory.setCode(value);
                                     iIndustrialCategoryService.save(industrialCategory);
                                     parentId = industrialCategory.getId();
+                                    count++;
                                 }
                                 Cell cell3 = row.getCell(c+2);
                                 if(cell3!=null){
@@ -231,6 +245,7 @@ public class IndustryRead {
                                         industrialCategory.setUtime(LocalDateTime.now());
                                         industrialCategory.setCode("last");
                                         iIndustrialCategoryService.save(industrialCategory);
+                                        count++;
                                     }
                                     c = this.totalCells;
                                 }
@@ -241,6 +256,7 @@ public class IndustryRead {
 
             }
         }
+        return count;
     }
     public static boolean isExcel2003(String filePath){
         return filePath.matches("^.+/.(?i)(xls)$");

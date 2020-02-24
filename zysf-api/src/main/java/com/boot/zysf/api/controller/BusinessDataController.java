@@ -1,6 +1,7 @@
 package com.boot.zysf.api.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.boot.zysf.api.Runner.FileReadRunner;
 import com.boot.zysf.api.mapper.BusinessDataMapper;
@@ -8,10 +9,7 @@ import com.boot.zysf.api.mapper.IndustrialCategoryMapper;
 import com.boot.zysf.api.mapper.RegionMapper;
 import com.boot.zysf.api.po.*;
 import com.boot.zysf.api.po.InduAccess.*;
-import com.boot.zysf.api.po.v0.BussinessDataV0;
-import com.boot.zysf.api.po.v0.ChanYeMap;
-import com.boot.zysf.api.po.v0.ComInfo;
-import com.boot.zysf.api.po.v0.CompanyInfo;
+import com.boot.zysf.api.po.v0.*;
 import com.boot.zysf.api.service.*;
 import com.boot.zysf.api.util.AddressUntils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,9 +62,29 @@ public class BusinessDataController {
     }
 
     @PostMapping(value = "/importQiye", headers = "content-type=multipart/form-data")
-    public void importQiYe(@RequestParam(value = "file", required = true) MultipartFile file) {
-    businessDataReadRunner.addIntoQiYe(file);
-
+    public R  importQiYe(@RequestParam(value = "file", required = true) MultipartFile file) {
+        List<BusinessData> businessDataList = businessDataService.getBusinessData(file);
+        for (int i = 0; i < businessDataList.size(); i++) {
+            String lat = null;
+            String lng = null;
+            String add3 = null;
+            BusinessData businessData = businessDataList.get(i);
+            if (businessDataList.get(i) != null) {
+                List<String> location = addressUntils.getLocation(businessData.getAddress());
+                if (location.size() != 0) {
+                    lat = location.get(0);
+                    lng = location.get(1);
+                    add3 = addressUntils.getAdd(lng, lat);
+                }
+                businessData.setAdd3(add3);
+                businessData.setLat(lat);
+                businessData.setLng(lng);
+                businessDataService.saveOrUpdate(businessData);
+            }
+        }
+        Map<String, Integer> map = new HashMap<>();
+        map.put("增加", businessDataList.size());
+        return R.ok(map);
     }
     @PostMapping(value = "/addInto", headers = "content-type=multipart/form-data")
     public void addInto(@RequestParam(value = "file", required = true) MultipartFile file) {
@@ -492,5 +511,109 @@ public class BusinessDataController {
         ChengZhang chengZhang = businessDataService.getChengZhang(induId, regionId);
         ChanYePingGu chanYePingGu = new ChanYePingGu(faYu,gongXian,jingZheng,chuangXin,ziBen,chengZhang);
         return  chanYePingGu;
+    }
+
+    @GetMapping(value = "/pk")
+    public R getPK(@RequestParam(value = "产业id",required = true)String induId,@RequestParam(value = "区域1id",required = true)String regionId,@RequestParam(value = "区域2id",required = true)String regionId1){
+        PK pk = businessDataService.getPK(induId, regionId, regionId1);
+        return R.ok(pk);
+    }
+    /**
+     * 查询全部数据
+     *
+     * @param company   查询条件
+     * @return
+     */
+    @GetMapping("/list")
+    public  R list(BusinessData company) {
+        return R.ok(businessDataService.list(buildQuery(company)));
+    }
+
+    /**
+     * 查询全部数据
+     *
+     * @param fields   查询的数据字段
+     * @param company   查询条件
+     * @return
+     */
+    @GetMapping("/list/fields")
+    public  R fieldsList(String[] fields, BusinessData company) {
+        QueryWrapper<BusinessData> query = buildQuery(company);
+        if(query == null) {
+            query = Wrappers.query();
+        }
+        query.select(fields);
+        List<BusinessData> result = businessDataService.list(query);
+        return R.ok(result);
+    }
+    private QueryWrapper<BusinessData> buildQuery(BusinessData company) {
+        QueryWrapper<BusinessData> query = null;
+        if(company != null) {
+            String name = company.getEmpName();
+            String address = company.getAddress();
+            company.setAddress(null);
+            company.setEmpName(null);
+            query = Wrappers.query(company);
+            if(name != null) {
+                query.like(BusinessData.NAME, name);
+            }
+            if(address != null) {
+                query.like(BusinessData.ADDRESS, address);
+            }
+        }
+        return query;
+    }
+    /**
+     * 通过ID查询数据信息
+     *
+     * @param id ID
+     * @return 信息
+     */
+    @GetMapping("/{id}")
+    public R getById(@PathVariable String id) {
+        return R.ok(businessDataService.getById(id));
+    }
+
+    /**
+     * 添加数据
+     *
+     * @param company 添加信息，需要权限验证
+     * @return success、false
+     */
+    @PostMapping
+    public R save(@Valid @RequestBody BusinessData company) {
+        return R.ok(businessDataService.save(company));
+    }
+
+    /**
+     * 删除信息
+     *
+     * @param id   ID
+     * @return R
+     */
+    @DeleteMapping("/{id}")
+    public R removeById(@PathVariable String id) {
+        return R.ok(businessDataService.removeById(id));
+    }
+
+    /**
+     * 修改信息
+     *
+     * @param  company Company信息
+     * @return success/false
+     */
+    @PutMapping
+    public R updateById(@Valid @RequestBody BusinessData company) {
+        return R.ok(businessDataService.updateById(company));
+    }
+    /**
+     * 批量插入信息
+     *
+     * @param companys Company列表信息
+     * @return success/false
+     */
+    @PostMapping("/batch")
+    public R saveBatch(@RequestBody List<BusinessData> companys) {
+        return R.ok(businessDataService.saveBatch(companys));
     }
 }

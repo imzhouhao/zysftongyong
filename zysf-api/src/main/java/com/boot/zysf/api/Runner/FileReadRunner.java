@@ -33,9 +33,8 @@ public class FileReadRunner implements CommandLineRunner {
     @Autowired
     IndustryRead industryRead;
     //企业信息读取
-    public void addIntoQiYe(MultipartFile file) {
+    public Integer addIntoQiYe(List<BusinessData> businessDataList) {
         CountableThreadPool threadPool = new CountableThreadPool(30);
-        List<BusinessData> businessDataList = businessDateRead.getExcelInfo(file);
         while (!Thread.currentThread().isInterrupted()) {
             for (int i = 0; i < businessDataList.size(); i++) {
                 int finalI = i;
@@ -56,7 +55,7 @@ public class FileReadRunner implements CommandLineRunner {
                             businessData.setAdd3(add3);
                             businessData.setLat(lat);
                             businessData.setLng(lng);
-                            businessDataService.save(businessData);
+                           businessDataService.saveOrUpdate(businessData);
                         }
                     }
                 });
@@ -64,21 +63,24 @@ public class FileReadRunner implements CommandLineRunner {
                 }
             break;
             }
+        return businessDataList.size();
         }
 
      //行业信息读取
-     public void addIntoHangYe(MultipartFile file) {
+     public Integer addIntoHangYe(MultipartFile file) {
+         final Integer[] count = {-1};
          CountableThreadPool threadPool = new CountableThreadPool(30);
 
          while (!Thread.currentThread().isInterrupted()) {
              threadPool.execute(new Runnable() {
                  @Override
                  public void run() {
-                     industryRead.getExcelInfo(file);
+                    count[0] = industryRead.getExcelInfo(file);
                  }
              });
              break;
          }
+         return count[0];
      }
     @Override
     public void run(String... args) throws Exception {

@@ -44,7 +44,7 @@ public class IndustryTupuRead {
         return errorMsg;
     }
 
-    public void getExcelInfo(MultipartFile mFile){
+    public Integer getExcelInfo(MultipartFile mFile){
         String fileName = mFile.getOriginalFilename();
         List<IndustroyTupu> industryTupuList=new ArrayList<IndustroyTupu>();
         try{
@@ -54,9 +54,11 @@ public class IndustryTupuRead {
             }
             //System.out.println(isExcel2003);
 
-            creatExcel(mFile.getInputStream(),isExcel2003);
+            Integer integer = creatExcel(mFile.getInputStream(), isExcel2003);
+            return integer;
         }catch (Exception e){
             e.printStackTrace();
+            return -1;
         }
 
     }
@@ -66,16 +68,19 @@ public class IndustryTupuRead {
         IndustroyTupu one = industroyTupuService.getOne(query);
         return one;
     }
-    public void creatExcel(InputStream is, boolean isExcel2003){
+    public Integer creatExcel(InputStream is, boolean isExcel2003){
         List<IndustroyTupu> industroyTupuList=new ArrayList<IndustroyTupu>();
         try{
             Workbook wb =new XSSFWorkbook(is);
-            readExcelValue(wb);
+            Integer integer = readExcelValue(wb);
+            return integer;
         } catch (IOException e) {
             e.printStackTrace();
+            return  -1;
         }
     }
-    private void readExcelValue(Workbook wb) {
+    private Integer readExcelValue(Workbook wb) {
+        Integer count = 0;
         Sheet sheet = null;
         for (int i = 0; i < wb.getNumberOfSheets(); i++) {
             sheet = wb.getSheetAt(i);
@@ -110,6 +115,7 @@ public class IndustryTupuRead {
                                 industroyTupu.setParentId(-1);
                                 industroyTupuService.save(industroyTupu);
                                 parentId = industroyTupu.getId();
+                                count++;
                             } else {
                                 parentId = category.getId();
                             }
@@ -130,6 +136,7 @@ public class IndustryTupuRead {
                                 industroyTupu.setRelation(relation);
                                 industroyTupuService.save(industroyTupu);
                                 parentId = industroyTupu.getId();
+                                count++;
                             } else {
                                 parentId = category.getId();
                             }
@@ -156,6 +163,7 @@ public class IndustryTupuRead {
                                 industroyTupu.setRelation(relation);
                                 industroyTupuService.save(industroyTupu);
                                 parentId = industroyTupu.getId();
+                                count++;
                             } else {
                                 parentId = category.getId();
                             }
@@ -182,6 +190,7 @@ public class IndustryTupuRead {
                                 industroyTupu.setRelation(relation);
                                 industroyTupuService.save(industroyTupu);
                                 parentId = industroyTupu.getId();
+                                count++;
                             } else {
                                 parentId = category.getId();
                             }
@@ -208,6 +217,7 @@ public class IndustryTupuRead {
                                 industroyTupu.setRelation(relation);
                                 industroyTupuService.save(industroyTupu);
                                 parentId = industroyTupu.getId();
+                                count++;
                             } else {
                                 parentId =category.getId();
                             }
@@ -239,6 +249,7 @@ public class IndustryTupuRead {
 
             }
         }
+        return count;
     }
     public static boolean isExcel2003(String filePath){
         return filePath.matches("^.+/.(?i)(xls)$");

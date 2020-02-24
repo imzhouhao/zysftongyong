@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.boot.zysf.api.po.BusinessData;
 import com.boot.zysf.api.po.InduAccess.*;
 import com.boot.zysf.api.po.v0.CompanyInfo;
+import com.boot.zysf.api.po.v0.PK;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -47,4 +48,12 @@ public interface BusinessDataService extends IService<BusinessData> {
 
     //获取成长性
     ChengZhang getChengZhang(String induId, String regionId);
+
+    //产业pk的z值
+    Double getZ(String induId, String regionId);
+
+    //产业的优劣缺
+    PK getPK(String induId, String regionId, String regionId1);
+
+
 }

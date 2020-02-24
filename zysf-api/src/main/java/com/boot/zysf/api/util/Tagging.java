@@ -35,11 +35,12 @@ public class Tagging {
     @Autowired
     IndustroyTupuMapper industroyTupuMapper;
 
-    private static String path = "F:\\项目\\哈尔滨项目\\Tencent_AILab_ChineseEmbedding\\ChineseEmbedding.bin";
-    private static File gModel = new File(path);
-    private static Word2Vec vec = WordVectorSerializer.readWord2VecModel(gModel);
+   // private static String path = "C:\\project\\ChineseEmbedding.bin";
+    //private static String path = "F:\\项目\\哈尔滨项目\\Tencent_AILab_ChineseEmbedding\\ChineseEmbedding.bin";
+   // private static File gModel = new File(path);
+    //private static Word2Vec vec = WordVectorSerializer.readWord2VecModel(gModel);
 
-//    private static Word2Vec vec = null;
+    private static Word2Vec vec = null;
 
     public double[] AverageArgs(List<String> list) {
 
@@ -84,9 +85,6 @@ public class Tagging {
             IndustroyTupu industroyTupu = list.get(i);
             String code = industroyTupu.getCode();
             String son = industroyTupu.getName();
-            if(code!=null){
-                continue;
-            }
             Integer id = industroyTupu.getId();
             QueryWrapper<IndustroyTupu> query = new QueryWrapper<>();
             query.eq("parent_id", id);
@@ -94,7 +92,7 @@ public class Tagging {
             for(int j = 0;j<list1.size();j++){
                 son = son.concat(list1.get(j).getName());
             }
-            industroyTupu.setCode("son"+son);
+            industroyTupu.setCode(son);
             industroyTupuService.updateById(industroyTupu);
         }
         QueryWrapper<IndustrialCategory> query = new QueryWrapper<>();
@@ -102,7 +100,7 @@ public class Tagging {
         List<IndustrialCategory> list2 = iIndustrialCategoryService.list(query);
         for(int i=0;i<list2.size();i++){
             IndustrialCategory industrialCategory = list2.get(i);
-            String code = industrialCategory.getCode();
+            String code = industrialCategory.getCode1();
             String son = industrialCategory.getName();
             Integer id = industrialCategory.getId();
             QueryWrapper<IndustrialCategory> query1 = new QueryWrapper<>();
@@ -116,7 +114,7 @@ public class Tagging {
                 son = son.concat(list1.get(j).getName());
             }
             System.out.println("son"+son);
-            industrialCategory.setCode(son);
+            industrialCategory.setCode1(son);
             iIndustrialCategoryService.updateById(industrialCategory);
         }
     }
@@ -189,6 +187,7 @@ public class Tagging {
         String tag4 = "";
         Integer id4 = null;
         max = 0;
+        Integer count = 0;
         for (int i = 0; i < list4.size(); i++) {
             String son = list4.get(i).getCode();
             double[] vector1 = AverageArgs(fenci(son));
@@ -197,13 +196,16 @@ public class Tagging {
                 max = similarity;
                 tag4 = list4.get(i).getName();
                 id4 = list4.get(i).getId();
+                count++;
+                tags.add(tag4);
             }
             if (tag4 == son) {
                 tags.add(tag4);
                 return tags;
             }
+            if(count>=3) break;
         }
-        tags.add(tag4);
+
 
 //        //5级产业
 //        QueryWrapper<IndustroyTupu> query5 = new QueryWrapper<>();
@@ -242,7 +244,7 @@ public class Tagging {
         double max = 0;
         //遍历一级产业，用该产业的名字和儿子的名字作为信息
         for (int i = 0; i < list.size(); i++) {
-            String son = list.get(i).getCode();
+            String son = list.get(i).getCode1();
             double[] vector1 = AverageArgs(fenci(son));
             double similarity = Similarity(vector0, vector1);
             if (max < similarity) {
@@ -260,7 +262,7 @@ public class Tagging {
         Integer id2 = null;
         max = 0;
         for (int i = 0; i < list2.size(); i++) {
-            String son = list2.get(i).getCode();
+            String son = list2.get(i).getCode1();
             double[] vector1 = AverageArgs(fenci(son));
             double similarity = Similarity(vector0, vector1);
             if (max < similarity) {
@@ -278,7 +280,7 @@ public class Tagging {
         Integer id3 = null;
         max = 0;
         for (int i = 0; i < list3.size(); i++) {
-            String son = list3.get(i).getCode();
+            String son = list3.get(i).getCode1();
             double[] vector1 = AverageArgs(fenci(son));
             double similarity = Similarity(vector0, vector1);
             if (max < similarity) {
@@ -299,21 +301,24 @@ public class Tagging {
         String tag4 = "";
         Integer id4 = null;
         max = 0;
+        Integer count = 0;
         for (int i = 0; i < list4.size(); i++) {
-            String son = list4.get(i).getCode();
+            String son = list4.get(i).getCode1();
             double[] vector1 = AverageArgs(fenci(son));
             double similarity = Similarity(vector0, vector1);
             if (max < similarity) {
                 max = similarity;
                 tag4 = list4.get(i).getName();
                 id4 = list4.get(i).getId();
+                tags.add(tag4);
+                count++;
             }
             if (tag4 == son) {
                 tags.add(tag4);
                 return tags;
             }
+            if(count>=3) break;
         }
-        tags.add(tag4);
 
 //        //5级产业
 //        QueryWrapper<IndustroyTupu> query5 = new QueryWrapper<>();

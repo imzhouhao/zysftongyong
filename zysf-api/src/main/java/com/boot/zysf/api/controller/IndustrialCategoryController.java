@@ -26,10 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -223,16 +220,20 @@ public class IndustrialCategoryController {
     }
 
     @PostMapping(value = "/importHangYe", headers = "content-type=multipart/form-data")
-    public void importHangYe(@RequestParam(value = "file", required = true) MultipartFile file){
-        fileReadRunner.addIntoHangYe(file);
+    public R importHangYe(@RequestParam(value = "file", required = true) MultipartFile file){
+        Integer integer = industryRead.getExcelInfo(file);
+        Map<String,Integer> map = new HashMap<>();
+        map.put("新增",integer);
+        return R.ok(map);
     }
 
     @GetMapping("/tag")
-    public void getTag() throws Exception {
+    public R getTag() throws Exception {
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         System.out.println(dateFormat.format(date));
        tagRunner.getTag();
+       return R.ok("匹配结束");
     }
 //    @DeleteMapping("/test")
 //    public R delete(){
